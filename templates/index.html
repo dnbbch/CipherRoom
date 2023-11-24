@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Шифрование и Дешифрация</title>
+    <link href="bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Шифрование и Дешифрация</h1>
+      <div class="input-group mb-3">
+        <textarea
+          class="form-control"
+          placeholder="Введите текст"
+          id="inputText"
+        ></textarea>
+      </div>
+      <div class="input-group mb-3">
+        <select class="form-select" id="encryptionMethod">
+          <option selected>Выберите метод</option>
+          <!-- Опции методов шифрования -->
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="encrypt()">Шифровать</button>
+      <button class="btn btn-secondary" onclick="decrypt()">Дешифровать</button>
+      <div id="output" class="mt-3"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
