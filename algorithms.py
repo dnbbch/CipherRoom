@@ -62,47 +62,49 @@ def vigenere_decrypt(encrypted_text, key):
     return decrypted_text
 
 def preprocess_text_for_block_permutation(text):
-    print("Перед обработкой:", repr(text))
-    text = re.sub(r'[^\w\s]', '', text)
-    print("После удаления знаков препинания:", repr(text))
+    text = re.sub(r'[^\w\s]', '', text, flags=re.UNICODE)
     text = re.sub(r'\s+', ' ', text)
-    print("После нормализации пробелов:", repr(text))
-    text = text.strip()
-    print("После удаления ведущих и замыкающих пробелов:", repr(text))
-    return text
+    text = text.replace(' ', '_')
+    return text.strip()
+
+def get_key_order(key):
+    alphabet = "абвгдеёжзийклмнопрстуфхцчшщьыъэюя_"
+    alphabet_dict = {letter: index for index, letter in enumerate(alphabet)}
+    alphabet_indexes = [alphabet_dict[letter] for letter in key.lower()]
+    order_dict = {alphabet_index: i for i, alphabet_index in enumerate(sorted(alphabet_indexes))}
+    order = [order_dict[alphabet_index] for alphabet_index in alphabet_indexes]
+    return order
 
 # Метод блочной перестановки
 def block_permutation_encrypt(text, key):
-    print("Оригинальный текст:", repr(text))
     text = preprocess_text_for_block_permutation(text)
-    print("После предобработки:", text)
-    if not key.strip():  # Проверка на пустой ключ
-        raise ValueError("Ключ не может быть пустым")
+    key_order = get_key_order(key)
     key_length = len(key)
-    key_index = sorted(list(range(key_length)), key=lambda x: key[x])
-    if len(text) % key_length != 0:
-        text += ' ' * (key_length - len(text) % key_length)
-    encrypted_text = ''
 
+    if len(text) % key_length != 0:
+        text += '_' * (key_length - len(text) % key_length)
+
+    encrypted_text = ''
     for i in range(0, len(text), key_length):
         block = text[i:i+key_length]
-        encrypted_block = ''.join(block[key_index.index(j)] for j in range(key_length))
-        encrypted_text += encrypted_block
-    return encrypted_text
+        encrypted_block = [''] * key_length
+        for j in range(key_length):
+            encrypted_block[key_order[j]] = block[j]
+        encrypted_text += ''.join(encrypted_block)
 
+    return encrypted_text
 
 def block_permutation_decrypt(encrypted_text, key):
     encrypted_text = preprocess_text_for_block_permutation(encrypted_text)
-    if not key.strip():  # Проверка на пустой ключ
-        raise ValueError("Ключ не может быть пустым")
+    key_order = get_key_order(key)
     key_length = len(key)
-    key_index = sorted(list(range(key_length)), key=lambda x: key[x])
-    decrypted_text = ''
 
+    decrypted_text = ''
     for i in range(0, len(encrypted_text), key_length):
         block = encrypted_text[i:i+key_length]
-        decrypted_block = list(block)
-        for j, k in enumerate(key_index):
-            decrypted_block[k] = block[j]
+        decrypted_block = [''] * key_length
+        for j in range(key_length):
+            decrypted_block[j] = block[key_order[j]]
         decrypted_text += ''.join(decrypted_block)
-    return decrypted_text
+
+    return decrypted_text.strip('_')
