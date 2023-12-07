@@ -8,43 +8,20 @@
 
 body {
   font-family: "Geologica", sans-serif;
-  background-color: var(--primary-color);
-  color: var(--text-color);
+  /* background-color: var(--primary-color); */
+  /* color: var(--text-color); */
 }
 
-.navbar-brand {
+a.navbar-brand {
   font-family: "Press Start 2P", sans-serif;
-  color: var(--accent-color2);
 }
 
-a,
-.navbar-brand,
-.nav-link {
-  color: var(--accent-color1);
-}
-
-.btn-primary {
-  background-color: var(--accent-color2);
-  border-color: var(--accent-color2);
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-color3);
-  border-color: var(--accent-color3);
-}
-
-/* Стили для полей ввода */
-input[type="text"],
-textarea,
-select {
-  background-color: #2e3b51; /* Фон поля ввода */
-  color: #f3f2f3; /* Цвет текста */
-  border: 1px solid #989ec3; /* Цвет границы */
-}
-
-input[type="text"]:focus,
-textarea:focus,
-select:focus {
-  border-color: #ab46c1; /* Цвет границы при фокусе */
-  outline: none; /* Убрать стандартный outline */
-}
+/* .btn-primary { */
+/*   background-color: var(--accent-color2); */
+/*   border-color: var(--accent-color2); */
+/* } */
+/*  */
+/* .btn-primary:hover { */
+/*   background-color: var(--accent-color3); */
+/*   border-color: var(--accent-color3); */
+/* } */
